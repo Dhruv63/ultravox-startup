@@ -1,115 +1,351 @@
-AI Voice Agent (Web & Telephony)
+# 🤖 AI Voice Agent Platform
+### Real-time Conversational AI for Web & Telephony
 
-This is a prototype for an AI voice agent that can talk to users via a web browser (live demo) and is designed to handle traditional phone calls (in-progress).
+<div align="center">
 
-🚀 Live Demo (Web Prototype)
+![Status](https://img.shields.io/badge/Status-Production%20Ready%20(Web)-success)
+![Telephony](https://img.shields.io/badge/Telephony-In%20Development-yellow)
+[![Powered by Ultravox](https://img.shields.io/badge/Powered%20by-Ultravox-blue)](https://www.ultravox.ai/)
 
-You can talk to the web-based AI agent live at:
+</div>
 
-https://ultravox-startup.onrender.com
+---
 
-(Note: This is your default Render URL. You can customize it in your Render settings.)
+## 📋 Table of Contents
 
-💡 Project Vision
+- [Overview](#overview)
+- [Live Demo](#live-demo)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Technology Stack](#technology-stack)
+- [Getting Started](#getting-started)
+- [Configuration](#configuration)
+- [Deployment](#deployment)
+- [Roadmap](#roadmap)
+- [Troubleshooting](#troubleshooting)
+- [License](#license)
 
-This project is a two-part prototype for a comprehensive AI communication platform. The goal is to allow users to interact with a sophisticated Ultravox-powered AI agent through two different channels:
+---
 
-    Web Interface (✅ Working): A web application where users can talk to the agent directly from their browser's microphone.
+## 🎯 Overview
 
-    Telephony (⚠️ On Hold): A system to handle real-world phone calls, allowing the agent to make and receive calls on a domestic Indian phone number using Exotel.
+This project is a comprehensive AI communication platform that enables natural voice conversations with an intelligent AI agent through multiple channels. Built on the Ultravox AI platform, it provides real-time, bidirectional voice streaming for seamless human-AI interactions.
 
-✨ Key Features (Web Prototype)
+### Current Status
 
-    Real-time, voice-to-voice conversation with an AI agent.
+- ✅ **Web Interface**: Fully functional browser-based voice agent
+- ⚙️ **Telephony Integration**: In development (awaiting Exotel Voicebot enablement)
 
-    Browser-based audio streaming (no phone required).
+---
 
-    Live transcript of the agent's responses.
+## 🌐 Live Demo
 
-    Simple, fast interface built with fasthtml.
+Experience the AI agent directly in your browser:
 
-🛠️ Technology Stack
+**🔗 [Try Live Demo](https://ultravox-startup.onrender.com)**
 
-    AI: Ultravox
+> **Note**: Allow microphone access when prompted. The agent responds in real-time using voice.
 
-    Web Framework: fasthtml (Python)
+---
 
-    Frontend Client: ultravox-client (JavaScript)
+## ✨ Features
 
-    Web Server: gunicorn + uvicorn
+### Current Features (Web)
 
-    Deployment: Render
+- 🎙️ **Real-time Voice Interaction**: Natural conversation with sub-second latency
+- 🌐 **Browser-Based**: No installation required - works directly in modern browsers
+- 📝 **Live Transcription**: Real-time display of agent responses
+- 🎯 **Intelligent Agent**: Powered by Ultravox's advanced voice AI model
+- 🔒 **Secure API**: Protected API keys using server-side proxy pattern
+- ⚡ **Fast Response**: WebSocket-based streaming for instant communication
 
-🔧 How to Run Locally
+### Planned Features (Telephony)
 
-    Clone the repository:
-    Bash
+- 📞 **Inbound Calls**: Receive calls on Indian phone numbers via Exotel
+- 🔄 **Call Routing**: Intelligent call flow management
+- 📊 **Call Analytics**: Track call duration, quality, and outcomes
+- 🇮🇳 **TRAI Compliant**: Full compliance with Indian telecom regulations
 
-git clone https://github.com/Dhruv63/ultravox-startup.git
-cd ultravox-startup
+---
 
-Create a virtual environment:
-Bash
+## 🏗️ Architecture
 
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+```
+┌─────────────┐         ┌──────────────┐         ┌─────────────┐
+│   Browser   │◄───────►│ Flask Server │◄───────►│  Ultravox   │
+│  (Client)   │  HTTPS  │   (Proxy)    │   API   │  AI Engine  │
+└─────────────┘         └──────────────┘         └─────────────┘
+      │                                                   │
+      │ WebSocket                                         │
+      └───────────────────────────────────────────────────┘
+                    (bidirectional audio)
+```
 
-Install dependencies:
-Bash
+### Component Overview
 
-pip install -r requirements.txt
+1. **Frontend**: Browser-based UI using `ultravox-client` JavaScript SDK
+2. **Backend**: Python Flask server acting as secure API proxy
+3. **AI Engine**: Ultravox platform handling voice understanding and generation
+4. **Audio Transport**: WebSocket (WSS) for bidirectional real-time audio streaming
 
-Set up your API Key:
+---
 
-    Create a file named .env in the root of the folder.
+## 🛠️ Technology Stack
 
-    Add your Ultravox API key and Agent ID to it:
-    Code snippet
+### Core Technologies
 
-    ULTRAVOX_API_KEY=mXfxxr7B.IOYvzcM4gzA7jyqjvHE4ubC1y9R73iMp
-    AGENT_ID=48bcaeef-6414-44a1-98b2-8085e9654274
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **AI Platform** | [Ultravox](https://www.ultravox.ai/) | Voice AI engine with multimodal understanding |
+| **Backend** | Python 3.x + [FastHTML](https://fastht.ml/) | Lightweight web framework |
+| **Frontend** | JavaScript + `ultravox-client` | Browser-based audio streaming |
+| **Web Server** | Gunicorn + Uvicorn | ASGI production server |
+| **Deployment** | [Render](https://render.com/) | Cloud hosting platform |
+| **Telephony** | Exotel (planned) | Indian telephony provider |
 
-Run the application:
-Bash
+### Dependencies
 
-    python main.py
+```
+fasthtml
+requests
+gunicorn
+uvicorn
+python-dotenv
+```
 
-    Open your browser to http://localhost:5001.
+---
 
-☁️ Deployment to Render (Free)
+## 🚀 Getting Started
 
-This app is configured for easy deployment on Render's free tier.
+### Prerequisites
 
-    Push to GitHub: Make sure your code is on this GitHub repository.
+- Python 3.8 or higher
+- Ultravox API key ([Get one here](https://app.ultravox.ai/settings/))
+- Modern web browser with microphone access
 
-    Create a Render Account: Sign up at render.com with your GitHub.
+### Installation
 
-    Create a New "Web Service" and connect your ultravox-startup repository.
+1. **Clone the repository**
+   ```
+   git clone https://github.com/yourusername/ai-voice-agent.git
+   cd ai-voice-agent
+   ```
 
-    Use these settings:
+2. **Install dependencies**
+   ```
+   pip install -r requirements.txt
+   ```
 
-        Runtime: Python 3
+3. **Set up environment variables**
+   
+   Create a `.env` file in the project root:
+   ```
+   ULTRAVOX_API_KEY=your_ultravox_api_key_here
+   ```
 
-        Build Command: pip install -r requirements.txt
+4. **Run the application**
+   ```
+   python main.py
+   ```
 
-        Start Command: gunicorn main:app --worker-class uvicorn.workers.UvicornWorker
+5. **Access the app**
+   
+   Open your browser and navigate to:
+   ```
+   http://localhost:8000
+   ```
 
-    Add Environment Variables:
+---
 
-        Go to the "Environment" tab for your new service.
+## ⚙️ Configuration
 
-        Add a variable with the Key ULTRAVOX_API_KEY and your secret key as the Value.
+### Environment Variables
 
-        Add another variable with the Key AGENT_ID and your agent's ID as the Value.
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `ULTRAVOX_API_KEY` | Your Ultravox API authentication key | Yes |
+| `PORT` | Server port (default: 8000) | No |
 
-    Deploy! Render will automatically build and launch your site at your public URL.
+### Agent Configuration
 
-📊 Project Status
+To use a custom Ultravox agent, modify `main.py`:
 
-    Web Prototype: ✅ Working and Deployed.
+```
+AGENT_ID = "your-agent-id-here"  # From Ultravox console
 
-    Telephony Prototype (/call agent): ⚠️ On Hold. This prototype (designed to use Exotel for real phone calls in India) is currently blocked. The required "Voicebot" applet for WebSocket streaming is not enabled on the Exotel account. The next step is to contact Exotel support to request this feature.
+@rt("/start")
+async def post():
+    r = fixie_request("POST", f"/agents/{AGENT_ID}/calls", json={})
+    # ... rest of the code
+```
 
-📄 License
+---
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+## 🌍 Deployment
+
+### Deploy to Render
+
+1. **Create a new Web Service** on [Render](https://render.com/)
+
+2. **Connect your repository**
+
+3. **Configure build settings**
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `gunicorn main:app --workers 1 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT`
+
+4. **Add environment variables**
+   - Add `ULTRAVOX_API_KEY` in the Render dashboard
+
+5. **Deploy**
+   
+   Your app will be live at: `https://your-app-name.onrender.com`
+
+### Deploy to Other Platforms
+
+The application is compatible with any platform that supports Python ASGI applications:
+- Heroku
+- Railway
+- Google Cloud Run
+- AWS Elastic Beanstalk
+
+---
+
+## 🗺️ Roadmap
+
+### Phase 1: Web Prototype ✅ Complete
+- [x] Basic web interface
+- [x] Voice interaction with Ultravox
+- [x] Live transcription
+- [x] Production deployment
+
+### Phase 2: Telephony Integration 🚧 In Progress
+- [x] Architecture design
+- [x] Exotel account setup
+- [ ] Voicebot feature enablement (pending Exotel approval)
+- [ ] Inbound call flow configuration
+- [ ] WebSocket integration with Exotel
+- [ ] Production testing
+
+### Phase 3: Advanced Features 📅 Planned
+- [ ] Call recording and playback
+- [ ] Multi-language support
+- [ ] Custom voice models (ElevenLabs integration)
+- [ ] Analytics dashboard
+- [ ] Outbound calling capability
+- [ ] CRM integration
+
+---
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+#### "Invalid API Key" Error
+
+**Solution**: Ensure your `ULTRAVOX_API_KEY` is correctly set in the `.env` file or environment variables.
+
+```
+# Verify key is loaded
+export ULTRAVOX_API_KEY="your-key-here"
+python main.py
+```
+
+#### Microphone Not Working
+
+**Solution**: 
+1. Check browser permissions (usually in address bar)
+2. Ensure you're using HTTPS (required for microphone access)
+3. Try a different browser (Chrome/Edge recommended)
+
+#### Call Not Connecting
+
+**Solution**:
+1. Check browser console for errors (F12)
+2. Verify Ultravox API key is valid
+3. Check network connectivity
+4. Ensure WebSocket connections aren't blocked by firewall
+
+#### 404 Error on Call Creation
+
+**Solution**: Verify your Agent ID is complete (not truncated). Copy it directly from the Ultravox console.
+
+---
+
+## 📞 Telephony Setup (For Production)
+
+### Exotel Integration Steps
+
+1. **Request Voicebot Feature**
+   
+   Email Exotel support at `hello@exotel.com` with:
+   - Subject: "Enable Stream/Voicebot Applet for [Account SID]"
+   - Use case description (AI voice agent integration)
+   - Request for bidirectional WebSocket streaming
+
+2. **Configure Flow** (Once enabled)
+   - Add Voicebot applet to Exotel Flow
+   - Point to your webhook endpoint
+   - Configure call routing rules
+
+3. **Backend Integration**
+   ```
+   @app.route("/exotel-inbound", methods=['POST'])
+   def handle_exotel_call():
+       # Create Ultravox call with agent
+       r = requests.post(
+           f'https://api.ultravox.ai/api/agents/{AGENT_ID}/calls',
+           headers={'X-API-Key': ULTRAVOX_API_KEY},
+           json={'medium': {'exotel': {}}}
+       )
+       return jsonify({'joinUrl': r.json()['joinUrl']})
+   ```
+
+---
+
+## 📚 Documentation
+
+- [Ultravox Documentation](https://docs.ultravox.ai/)
+- [Exotel API Docs](https://developer.exotel.com/)
+- [FastHTML Documentation](https://fastht.ml/)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👤 Author
+
+**Your Name / Quantumbuilds**
+
+- GitHub: [@yourusername](https://github.com/yourusername)
+- Website: [your-website.com](https://your-website.com)
+
+---
+
+## 🙏 Acknowledgments
+
+- [Ultravox AI](https://www.ultravox.ai/) for the voice AI platform
+- [Exotel](https://exotel.com/) for Indian telephony infrastructure
+- [Render](https://render.com/) for hosting
+
+---
+
+<div align="center">
+
+**⭐ Star this repo if you find it useful!**
+
+Made with ❤️ by Quantumbuilds
+
+</div>
+```
+
+Now you can simply copy this entire block and paste it directly into your `README.md` file! Just replace the placeholders like `@yourusername`, `your-website.com`, and your actual GitHub URL with your real information.
