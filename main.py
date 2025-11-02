@@ -10,8 +10,12 @@ from fasthtml.common import (
 )
 import requests
 import os
+from dotenv import load_dotenv
 
-ULTRAVOX_API_KEY = os.environ.get('ULTRAVOX_API_KEY', "<your api key>")
+load_dotenv()  # Load .env file
+
+ULTRAVOX_API_KEY = os.environ.get('ULTRAVOX_API_KEY', "")
+print(f"API Key loaded: {ULTRAVOX_API_KEY[:10]}..." if ULTRAVOX_API_KEY else "No API key found!")
 
 app, rt = fast_app(pico=False, hdrs=(Script(src="https://cdn.tailwindcss.com"),))
 
@@ -21,23 +25,6 @@ def fixie_request(method, path, **kwargs):
         method, u + path, headers={"X-API-Key": ULTRAVOX_API_KEY}, **kwargs
     )
 
-
-SYSTEM_PROMPT = """
-You are a helpful assistant. In case someone asks, you can get a random cat fact via the `getCatFact` tool.
-"""
-
-EXAMPLE_TOOL = [
-    {
-        "temporaryTool": {
-            "modelToolName": "getCatFact",
-            "description": "Returns back a random cat fact",
-            "http": {
-                "baseUrlPattern": "https://catfact.ninja/fact",
-                "httpMethod": "GET",
-            },
-        }
-    }
-]
 
 js_on_load = """
 import { UltravoxSession } from 'https://esm.sh/ultravox-client';
@@ -91,10 +78,10 @@ def layout(*args, **kwargs):
 
 @rt("/")
 def get():
-    button = Button("Start call", hx_post="/start", hx_target="#call-mgmt", hx_swap="outerHTML", cls=TW_BUTTON)
+    button = Button("Start call", id="start-button", hx_post="/start", hx_target="#call-mgmt", hx_swap="outerHTML", cls=TW_BUTTON)
     return layout(
         Script(js_on_load, type="module"),
-        H1("The Cat Fact Assistant", cls="text-xl font-bold mt-8"),
+        H1("Genisis - Customer Support Agent", cls="text-xl font-bold mt-8"),
         Div(
             Div(
                 "Status: ",
@@ -104,19 +91,22 @@ def get():
                 "Call ID:",
                 Span("N/A", id="call-id", cls="font-bold"),
             ),
-            Div(button),
+            Div(button,
+                # hidden end button that will be shown when a call starts
+                Button("End call", id="end-button", cls=TW_BUTTON, style="display:none", hx_get="/end", hx_swap="outerHTML"),
+            ),
             id="call-mgmt"
         ),
     )
 
 @rt("/start")
 async def post():
-    d = {
-        "systemPrompt": SYSTEM_PROMPT,
-        "voice": "Mark",
-        "selectedTools": EXAMPLE_TOOL,
-    }
-    r = fixie_request("POST", "/calls", json=d)
+    # Use your Genisis agent ID
+    AGENT_ID = os.environ.get("AGENT_ID", "48bcaeef-6414-44a1-98b2-8085e9654274")  # Your correct agent ID from the response
+    
+    # Create call using your agent
+    r = fixie_request("POST", f"/agents/{AGENT_ID}/calls", json={})
+    
     if r.status_code == 201:
         callDetails = r.json()
         js = client_js(callDetails)
@@ -134,7 +124,7 @@ async def post():
             Script(code=js),
         )
     else:
-        return r.text
+        return Div(f"Error: {r.status_code} - {r.text}")
 
 @rt("/end")
 def get():
