@@ -2,3 +2,4 @@ python-fasthtml
 requests
 python-dotenv
 uvicorn
+python-multipart
