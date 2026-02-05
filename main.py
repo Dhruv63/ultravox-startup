@@ -51,7 +51,6 @@ headers = (
         /* Custom scrollbar for transcript */
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     """)
 )
 
@@ -272,6 +271,7 @@ def CallOverlay(agent_name, join_url):
         ),
         # Init Script
         Script(f"window.startCall('{join_url}')"),
+        id="call-overlay-container"
     )
 
 def CallSummary():
@@ -302,7 +302,7 @@ def CallSummary():
             
             Button(
                 "Close & Return", 
-                onclick="document.getElementById('call-overlay-container').outerHTML = '<div id=\"call-overlay-container\"></div>';",
+                onclick="document.getElementById('call-overlay-container').innerHTML = '';",
                 cls="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 rounded-lg transition-colors"
             ),
             cls="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative z-50 animate-fade-in-up"
@@ -405,14 +405,12 @@ def post(agent_id: str):
     # Create the call via Ultravox API
     # NOTE: In a real app we'd use the specific agent ID. For the demo, we use the fallback.
     target_agent_id = DEFAULT_AGENT_ID
-    print(f"Starting call with Agent ID: {target_agent_id}")
     
     try:
         r = fixie_request("POST", f"/agents/{target_agent_id}/calls", json={})
         r.raise_for_status()
         call_data = r.json()
         join_url = call_data.get("joinUrl")
-        print(f"Call created successfully. Join URL: {join_url}")
         
         return CallOverlay(agent["name"], join_url)
     except Exception as e:
