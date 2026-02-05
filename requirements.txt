@@ -1,5 +1,4 @@
-fasthtml
+python-fasthtml
 requests
 python-dotenv
-gunicorn
 uvicorn
