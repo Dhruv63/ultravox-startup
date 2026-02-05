@@ -17,7 +17,7 @@ DEFAULT_AGENT_ID = os.environ.get("AGENT_ID", "eff14921-ffad-4f32-b158-09209e5b2
 AGENTS = [
     {
         "id": "agent_booking",
-        "name": "Sarah",
+        "name": "Alex",
         "role": "Restaurant Booking",
         "desc": "Handles reservations, checks availability, and collects guest details.",
         "icon": "🍽️",
@@ -124,6 +124,16 @@ window.startCall = async (joinUrl) => {
             }
         }
     });
+
+    // Resume AudioContext for mobile browsers (required for autoplay policy)
+    try {
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioContext.state === 'suspended') {
+            await audioContext.resume();
+        }
+    } catch (e) {
+        console.log('AudioContext resume failed:', e);
+    }
 
     await session.joinCall(joinUrl);
 };
