@@ -393,6 +393,8 @@ def get():
             
                 cls="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
         ),
+        # HTMX target for Call Overlay
+        Div(id="call-overlay-container"),
         Script(client_js, type="module"),
         cls="bg-gray-50 min-h-screen text-gray-900"
     )
