@@ -52,8 +52,9 @@ headers = (
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
         .htmx-indicator { display: none; }
-        .htmx-request .htmx-indicator { display: inline-block; }
-        .htmx-request.htmx-indicator { display: inline-block; }
+        .htmx-request .when-loaded { display: none; }
+        .htmx-request .when-loading { display: flex; }
+        .when-loading { display: none; }
     """)
 )
 
@@ -188,14 +189,13 @@ def AgentCard(agent):
         P(agent['role'], cls="text-sm font-semibold text-gray-600 mb-2"),
         P(agent['desc'], cls="text-sm text-gray-500 mb-6 leading-relaxed"),
         Button(
-            "Test Agent", 
-            Div(cls="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full ml-2 htmx-indicator"),
+            Div("Test Agent", cls="when-loaded"),
+            Div(Span(cls="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"), "Connecting...", cls="when-loading items-center"),
             cls=f"w-full py-2.5 px-4 rounded-lg font-medium text-white transition-colors bg-blue-600 hover:bg-blue-700 shadow-sm flex items-center justify-center gap-2",
             hx_post=f"/start?agent_id={agent['id']}",
             hx_target="#call-overlay-container", 
             hx_swap="outerHTML",
-            hx_indicator="this",
-            disabled=False
+            hx_indicator="this"
         ),
         cls="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-blue-300 hover:shadow-lg transition-all duration-300 flex flex-col"
     )
