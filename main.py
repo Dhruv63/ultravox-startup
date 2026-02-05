@@ -193,7 +193,7 @@ def AgentCard(agent):
             cls=f"w-full py-2.5 px-4 rounded-lg font-medium text-white transition-colors bg-blue-600 hover:bg-blue-700 shadow-sm flex items-center justify-center gap-2",
             hx_post=f"/start?agent_id={agent['id']}",
             hx_target="#call-overlay-container", 
-            hx_swap="innerHTML",
+            hx_swap="outerHTML",
             hx_indicator="this",
             disabled=False
         ),
@@ -308,7 +308,7 @@ def CallSummary():
             
             Button(
                 "Close & Return", 
-                onclick="document.getElementById('call-overlay-container').innerHTML = '';",
+                onclick="document.getElementById('call-overlay-container').outerHTML = '<div id=\"call-overlay-container\"></div>';",
                 cls="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 rounded-lg transition-colors"
             ),
             cls="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 relative z-50 animate-fade-in-up"
@@ -411,12 +411,14 @@ def post(agent_id: str):
     # Create the call via Ultravox API
     # NOTE: In a real app we'd use the specific agent ID. For the demo, we use the fallback.
     target_agent_id = DEFAULT_AGENT_ID
+    print(f"Starting call with Agent ID: {target_agent_id}")
     
     try:
         r = fixie_request("POST", f"/agents/{target_agent_id}/calls", json={})
         r.raise_for_status()
         call_data = r.json()
         join_url = call_data.get("joinUrl")
+        print(f"Call created successfully. Join URL: {join_url}")
         
         return CallOverlay(agent["name"], join_url)
     except Exception as e:
