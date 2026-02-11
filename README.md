@@ -1,18 +1,79 @@
-# Ultravox Web Quickstart
+# VoiceAgent AI - Enterprise Demo 🎙️
 
-This is a quickstart project for creating a web-based Voice AI Agent on Ultravox. We've tried to keep it as simple as possible to show all of the key parts in a single file.
+A high-fidelity, production-ready MVP demo of an AI-powered voice agent platform for enterprise use cases. Built with **FastHTML**, **Ultravox API**, and **Tailwind CSS**.
 
-This example depends on the `python-fasthtml` package, which is a great little project for building web apps in pure python. We need the web app to create the initial request to Ultravox to start the call.
+![VoiceAgent AI Dashboard](https://via.placeholder.com/1200x600?text=VoiceAgent+AI+Dashboard+Preview)
 
-On the client, we depend on the `ultravox-client` library (see [npm package](https://www.npmjs.com/package/ultravox-client)). To simplify the example, we load the Ultravox Client library directly from [esm.sh](https://esm.sh).
+## 🚀 Overview
 
-## Getting Started
+**VoiceAgent AI** demonstrates the power of modern real-time voice AI for business. This application serves as a dashboard and interaction portal where users can:
+- View business metrics (Calls, Savings, Active Agents).
+- Interact with a custom-trained AI Agent ("Alex" - Restaurant Booking).
+- Experience real-time voice conversations with <500ms latency.
+- View call history and analytics.
 
-1. Clone this repository
-1. Install [https://fastht.ml/](https://fastht.ml/) with `pip install python-fasthtml`
-1. Get an API key from [https://app.ultravox.ai](app.ultravox.ai) and either set it as an environment variable under `ULTRAVOX_API_KEY` or replace the value in `main.py`
-1. Run `python main.py`
-1. Open your browser to `http://localhost:5001`
+This project is optimized for deployment on **Railway** and is designed to look and feel like a premium SaaS product.
 
-## Looking for React?
-If you're looking for a more advanced example using React, go here: [https://github.com/fixie-ai/ultravox-demo-template-vercel](https://github.com/fixie-ai/ultravox-demo-template-vercel).
+## ✨ Features
+
+- **Real-time Voice AI**: Powered by [Ultravox](https://ultravox.ai), enabling natural, low-latency conversations.
+- **Interactive Dashboard**: clean, modern UI built with Tailwind CSS.
+- **Live Call Analytics**: Real-time timer, status tracking, and mic visualization.
+- **Responsive Design**: Fully mobile-compatible with touch-optimized controls.
+- **AudioContext Fixes**: Includes specific logic to handle mobile browser autoplay policies.
+- **Mock Business Data**: Demonstrates potential ROI with simulated call metrics and cost savings.
+
+## 🛠️ Tech Stack
+
+- **Backend**: Python (FastHTML, Uvicorn)
+- **Frontend**: FastHTML (Server-Side Rendering), HTMX (Dynamic interactions), Tailwind CSS (Styling)
+- **AI Core**: Ultravox Real-time API
+- **Client Library**: `ultravox-client` (via ESM)
+
+## 📦 Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/Dhruv63/ultravox-startup.git
+    cd ultravox-startup
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Configure Environment:**
+    Create a `.env` file in the root directory:
+    ```env
+    ULTRAVOX_API_KEY=your_api_key_here
+    AGENT_ID=your_agent_id_here
+    ```
+
+4.  **Run the Application:**
+    ```bash
+    python main.py
+    ```
+    Visit `http://localhost:5001` in your browser.
+
+## 🚀 Deployment (Railway)
+
+This project is configured for seamless deployment on [Railway](https://railway.app).
+
+1.  Connect your GitHub repository to Railway.
+2.  Add the `ULTRAVOX_API_KEY` and `AGENT_ID` variables in the Railway project settings.
+3.  Deploy! Python dependencies will be installed automatically via `requirements.txt`.
+
+## 📱 Mobile Support
+
+The application includes specific optimizations for mobile devices:
+- **Touch-friendly buttons**.
+- **Audio Context Management**: Automatically resumes AudioContext on user interaction to comply with mobile browser policies (iOS/Android).
+- **Responsive Layout**: Adjusts grid and font sizes for smaller screens.
+
+## 📝 License
+
+This project is a demo and is available for educational and evaluation purposes.
+
+---
+*Built for Raw Engineering Proposal*
